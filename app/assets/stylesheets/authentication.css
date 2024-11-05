@@ -45,7 +45,7 @@ h2 {
   color: var(--red);
   padding: 10px;
   border: 1px solid var(--grey-white);
-  border-radius: 5px;
+  border-radius: 12px;
   margin-bottom: 10px;
   margin-top: -10px;
 }
