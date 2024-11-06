@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Itim&family=Rajdhani:wght@300;400;500;600;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap");
+
+:root {
+  --white: #f4f4f4;
+  --beige: #ebccd1;
+  --blue-shadow: #0056b3;
+  --light-blue: #4285f4;
+  --blue: #357ae8;
+  --grey-white: #ddd;
+  --light-black: #333;
+  --red: #a94442;
+  --light-red: #f574728d;
+}
+
+body {
+  font-family: "Rajdhani", sans-serif;
+  background-color: var(--white);
+  margin: 0;
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}
+
+h2 {
+  color: var(--light-black);
+  margin-bottom: 20px;
+}
+
+.alert {
+  background-color: var(--light-red);
+  color: var(--red);
+  padding: 10px;
+  border: 1px solid var(--grey-white);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  margin-top: -10px;
+}
+
+.form-for {
+  background-color: var(--white);
+  border: 1px solid var(--beige);
+  border-radius: 28px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.field-box {
+  margin-bottom: 15px;
+}
+
+.field {
+  font-size: 16px;
+  border-radius: 6px;
+  padding: 10px 18px;
+  border-width: 0.5px;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 400;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  color: var(--white);
+  background-color: var(--light-blue);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.btn-font {
+  font-family: "Rajdhani", sans-serif;
+}
+
+.btn:hover {
+  background-color: var(--blue-shadow);
+}
+
+.btn-omniauth {
+  background-color: var(--light-blue);
+}
+
+.btn-omniauth:hover {
+  background-color: var(--blue);
+}
+
+.actions {
+  margin-top: 15px;
+}

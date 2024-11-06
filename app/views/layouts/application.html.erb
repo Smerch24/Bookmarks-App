@@ -6,16 +6,29 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "authentication", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <% if user_signed_in? %>
-      <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+<% resource_name = :user %>
+<% resource_class = User %>
+<% omniauth_providers = resource_class.omniauth_providers %>
+
+<body>
+<% if alert.present? %>
+  <p class="alert"><%= alert %></p>
+<% end %>
+
+<div class="form-for">
+  <% if user_signed_in? %>
+    <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn' %>
+  <% else %>
+    <% if omniauth_providers.present? %>
+      <% omniauth_providers.each do |provider| %>
+        <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: 'btn btn-omniauth btn-font' %><br />
+      <% end %>
     <% end %>
-    <%= yield %>
+  <% end %>
+  <%= yield %>
   </body>
 </html>
