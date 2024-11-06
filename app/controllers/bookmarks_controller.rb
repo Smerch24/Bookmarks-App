@@ -6,7 +6,7 @@ class BookmarksController < ApplicationController
   before_action :find_bookmark_by_id, only: %i[edit update destroy]
   before_action :authenticate_user!
   def index
-    @bookmarks = Bookmark.all
+    @bookmarks = Bookmark.where(user_id: current_user.id)
   end
 
   def new
@@ -15,6 +15,7 @@ class BookmarksController < ApplicationController
 
   def create
     @bookmark = Bookmark.new(bookmark_params)
+    @bookmark.user_id = current_user.id
     if @bookmark.save
       redirect_to bookmarks_path
     else
@@ -40,7 +41,7 @@ class BookmarksController < ApplicationController
   private
 
   def bookmark_params
-    params.require(:bookmark).permit(:title, :url_link, :description)
+    params.require(:bookmark).permit(:title, :url_link, :description, :user_id)
   end
 
   def find_bookmark_by_id
