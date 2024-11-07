@@ -1,4 +1,4 @@
-<h1>New Bookmark</h1>
+<h1>Edit Bookmark</h1>
 
 <%= form_with model: @bookmark, local: true do |form| %>
 
@@ -11,17 +11,18 @@
     <%= form.label :description, 'Description' %>
     <%= form.text_area :description, class: 'form-input' %>
   </div>
+  
+  <div class="form-group">
+    <%= form.submit 'Save Changes', class: 'btn-form' %>
+  </div>
 
   <div class="form-group">
     <%= form.label :url_link, 'Url' %>
     <%= form.text_field :url_link, class: 'form-input' %>
   </div>
-  
-  <div class="form-group">
-    <%= form.submit 'Create', class: 'btn-form' %>
-  </div>
 
   <div class="edit-buttons">
+    <%= button_to "Delete", bookmark_path(@bookmark), method: :delete, class: 'btn-delete' %>
     <%= link_to 'Back', bookmarks_path, class: 'btn-form' %>
   </div>
 <% end %>
