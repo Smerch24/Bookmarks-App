@@ -1,11 +1,28 @@
-<% if @bookmarks.any? %>
-  <% @bookmarks.each do |bookmark| %>
-    <% if current_user.id == bookmark.user_id %>
-      <h1><%= bookmark.title %></h1>
-      <h3><%= link_to bookmark.url_link, bookmark.url_link %></h3>
-    <% end %>
+<%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn' %>
+<%= link_to '+', new_bookmark_path, class: 'new-btn' %>
+<h1 class="title">All Bookmarks</h1>
+
+<div class="form">
+  <% if @bookmarks.any? %>
+    <div class="bookmarks-group">
+      <% @bookmarks.each do |bookmark| %>
+        <% if current_user.id == bookmark.user_id %>
+          <div class="bookmark">
+            <%= link_to bookmark.url_link do %>
+              <%= image_tag "/screenshots/#{bookmark.id}.png", alt: "Screenshot of #{bookmark.title}", class: "bookmark-image"%>
+            <% end %>
+            <div class="link-text">
+              <p><%= bookmark.url_link %></p>
+            </div>
+            <div class="edit-button">
+              <%= link_to 'Edit', edit_bookmark_path(bookmark), class: "bookmark-btn" %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+</div>
+    <h1>You do not have any bookmark, <%= link_to "Create it!", new_bookmark_path %></h1>
   <% end %>
-<% else %>
-  <h1>You do not have any bookmark, <%= link_to "Create it!", new_bookmark_path %></h1>
-<% end %>
 
