@@ -1,23 +1,19 @@
 # frozen_string_literal: true
 
-# Managment Bookmark objects
+# Management Bookmark objects
 class Bookmark < ApplicationRecord
   belongs_to :user
   after_create :generate_screenshot
+  after_update :generate_screenshot, if: :saved_change_to_url_link?
 
   validates :title, presence: true
   validates :url_link, presence: true
 
   private
 
-  # Метод для генерации скриншота
   def generate_screenshot
     screenshot_path = Rails.root.join('public', 'screenshots', "#{id}.png")
-
-    # Используем url_link для передачи ссылки в сервис
     ScreenshotService.capture(url_link, screenshot_path)
-
-    # Сохраняем путь к скриншоту в базе данных
-    update(screenshot: "/screenshots/#{id}.png")
+    update_column(:screenshot, "/screenshots/#{id}.png")
   end
 end
