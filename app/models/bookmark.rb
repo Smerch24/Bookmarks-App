@@ -8,6 +8,7 @@ class Bookmark < ApplicationRecord
 
   validates :title, presence: true
   validates :url_link, presence: true
+  validates :description, length: { maximum: 33 }
 
   private
 

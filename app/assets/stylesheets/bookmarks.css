@@ -5,19 +5,29 @@ body {
   background-color: rgb(231, 230, 230);
 }
 
-/* .left-side {
-  width: 25%;
-  height: 100%;
-  background-color: #10c8c234;
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode .bookmark {
+  background-color: #59d0ff44;
+}
+
+.left-side {
   position: fixed;
   top: 0;
   left: 0;
-} */
+  width: 30%;
+  height: 100%;
+  background-color: #59d0ff44;
+}
 
 .title {
   position: relative;
   top: 0;
   text-align: center;
+  margin-left: 30%;
 }
 
 .btn {
@@ -25,10 +35,10 @@ body {
   top: 8px;
   left: 12px;
   display: inline-block;
-  padding: 12px 24px;
+  padding: 12px 26px;
   background-color: #01c6c9;
   color: #fff;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   text-decoration: none;
   border-radius: 5px;
@@ -121,11 +131,50 @@ p {
   .bookmarks-group {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .title {
+    text-align: end;
+  }
 }
 
 @media (max-width: 480px) {
   .bookmarks-group {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .bookmark {
+    margin: 10px 0;
+    width: 90%;
+    max-width: 280px;
+  }
+
+  .title {
+    text-align: center;
+    margin: 10px 0px;
+  }
+
+  .left-side {
+    width: 0%;
+    height: 0%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn {
+    margin-top: 13px;
+  }
+
+  #toggle-dark-mode {
+    width: 180px;
+  }
+
+  .new-btn {
+    width: 16px;
   }
 }
 
@@ -159,7 +208,7 @@ p {
   text-decoration: none;
   padding: 10px 20px;
   border-radius: 6px;
-  margin-top: 9px;
+  margin-top: 10px;
   display: inline-block;
   transition: transform 0.3s ease;
   margin-left: 10px;
@@ -249,9 +298,10 @@ a.btn {
   border-radius: 28px;
   display: inline-block;
   margin-top: 20px;
-  padding: 12px 24px;
+  padding: 6px 20px;
   background-color: #0277bd;
   color: white;
+  font-size: 30px;
   font-weight: bold;
   text-decoration: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -263,4 +313,28 @@ a.btn {
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   }
+}
+
+.dark-mode-btn {
+  border-radius: 16px;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 6px 16px;
+  background-color: #0277bd;
+  border-width: 0px;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: #038071;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+em {
+  height: 200px;
 }
