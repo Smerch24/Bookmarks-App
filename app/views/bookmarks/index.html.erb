@@ -1,10 +1,8 @@
 <div class="left-side">
-  <table>
-    <th>
-      <td><%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn' %></td>
-    </th>
-    <td><%= link_to '+', new_bookmark_path, class: 'new-btn' %></td>
-  </table>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn' %>
+  <button class="dark-mode-btn" id="toggle-dark-mode">Переключить тему</button>
+  <%= link_to '+', new_bookmark_path, class: 'new-btn' %>
+
 </div>
 
 <h1 class="title">All Bookmarks</h1>
@@ -18,18 +16,23 @@
             <%= link_to bookmark.url_link do %>
               <%= image_tag "/screenshots/#{bookmark.id}.png", alt: "Screenshot of #{bookmark.title}", class: "bookmark-image" %>
             <% end %>
-          <div class="link-text">
-            <p><%= bookmark.url_link %></p>
+            <div class="link-text">
+              <p><%= bookmark.url_link %></p>
+              <% if bookmark.description.present? %>
+                <p class="bookmark-description"><%= bookmark.description %></p>
+                <% else %>
+                <br>
+              <% end %>
+            </div>
+            <div class="edit-button">
+              <%= link_to 'Edit', edit_bookmark_path(bookmark), class: "bookmark-btn" %>
+              <%= button_to "Delete", bookmark_path(bookmark), method: :delete, class: 'btn-delete' %>
+            </div>
           </div>
-          <div class="edit-button">
-            <%= link_to 'Edit', edit_bookmark_path(bookmark), class: "bookmark-btn" %>
-            <%= button_to "Delete", bookmark_path(bookmark), method: :delete, class: 'btn-delete' %>
-          </div>
-    </div>
         <% end %>
       <% end %>
     </div>
   <% else %>
-</div>
     <h1>You do not have any bookmark, <%= link_to "Create it!", new_bookmark_path %></h1>
   <% end %>
+</div>
