@@ -14,10 +14,10 @@
         <% if current_user.id == bookmark.user_id %>
           <div class="bookmark">
             <%= link_to bookmark.url_link do %>
-              <%= image_tag "/screenshots/#{bookmark.id}.png", alt: "Screenshot of #{bookmark.title}", class: "bookmark-image" %>
+              <%= image_tag bookmark.screenshot , alt: "Screenshot of #{bookmark.title}", class: "bookmark-image" %>
             <% end %>
             <div class="link-text">
-              <p><%= bookmark.url_link %></p>
+              <p><%= bookmark.title %></p>
               <% if bookmark.description.present? %>
                 <p class="bookmark-description"><%= bookmark.description %></p>
                 <% else %>
