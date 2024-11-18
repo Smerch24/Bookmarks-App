@@ -1,8 +1,7 @@
 <div class="left-side">
   <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn' %>
-  <button class="dark-mode-btn" id="toggle-dark-mode">Переключить тему</button>
-  <%= link_to '+', new_bookmark_path, class: 'new-btn' %>
-
+  <button class="dark-mode-btn" id="toggle-dark-mode">Change theme</button>
+  <button class="new-btn" data-bs-toggle="modal" data-bs-target="#newBookmarkModal">+</button>
 </div>
 
 <h1 class="title">All Bookmarks</h1>
@@ -14,10 +13,10 @@
         <% if current_user.id == bookmark.user_id %>
           <div class="bookmark">
             <%= link_to bookmark.url_link do %>
-              <%= image_tag "/screenshots/#{bookmark.id}.png", alt: "Screenshot of #{bookmark.title}", class: "bookmark-image" %>
+              <%= image_tag bookmark.screenshot , alt: "Screenshot of #{bookmark.title}", class: "bookmark-image" %>
             <% end %>
             <div class="link-text">
-              <p><%= bookmark.url_link %></p>
+              <p><%= bookmark.title %></p>
               <% if bookmark.description.present? %>
                 <p class="bookmark-description"><%= bookmark.description %></p>
                 <% else %>
@@ -25,7 +24,7 @@
               <% end %>
             </div>
             <div class="edit-button">
-              <%= link_to 'Edit', edit_bookmark_path(bookmark), class: "bookmark-btn" %>
+              <%= link_to 'Edit', "#", class: "bookmark-btn", data: { bs_toggle: "modal", bs_target: "#editBookmarkModal#{bookmark.id}" } %>
               <%= button_to "Delete", bookmark_path(bookmark), method: :delete, class: 'btn-delete' %>
             </div>
           </div>
@@ -33,6 +32,74 @@
       <% end %>
     </div>
   <% else %>
-    <h1>You do not have any bookmark, <%= link_to "Create it!", new_bookmark_path %></h1>
-  <% end %>
+    <h1>You do not have any bookmark, <a href="#" data-bs-toggle="modal" data-bs-target="#newBookmarkModal">Create it!</a></h1>  <% end %>
 </div>
+
+<div class="modal fade" id="newBookmarkModal" tabindex="-1" aria-labelledby="newBookmarkModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newBookmarkModalLabel">New Bookmark</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with model: @bookmark, local: true do |form| %>
+          <div class="form-group">
+            <%= form.label :title, 'Title' %>
+            <%= form.text_field :title, class: 'form-input' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :description, 'Description' %>
+            <%= form.text_area :description, class: 'form-input' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :url_link, 'Url' %>
+            <%= form.text_field :url_link, class: 'form-input' %>
+          </div>
+          
+          <div class="form-group">
+            <%= form.submit 'Create', class: 'btn-form' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% @bookmarks.each do |bookmark| %>
+  <!-- Модальное окно для редактирования -->
+  <div class="modal fade" id="editBookmarkModal<%= bookmark.id %>" tabindex="-1" aria-labelledby="editBookmarkModalLabel<%= bookmark.id %>" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editBookmarkModalLabel<%= bookmark.id %>">Edit Bookmark</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= form_with model: bookmark, url: bookmark_path(bookmark), method: :patch, local: true do |form| %>
+            <div class="form-group">
+              <%= form.label :title, 'Title' %>
+              <%= form.text_field :title, class: 'form-input' %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :description, 'Description' %>
+              <%= form.text_area :description, class: 'form-input' %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :url_link, 'Url' %>
+              <%= form.text_field :url_link, class: 'form-input' %>
+            </div>
+
+            <div class="form-group">
+              <%= form.submit 'Save Changes', class: 'btn-form' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

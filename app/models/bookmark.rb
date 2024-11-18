@@ -13,8 +13,9 @@ class Bookmark < ApplicationRecord
   private
 
   def generate_screenshot
-    screenshot_path = Rails.root.join('public', 'screenshots', "#{id}.png")
+    screenshot_filename = "#{id}_#{Time.now.strftime('%Y%m%d%H%M%S')}.png"
+    screenshot_path = Rails.root.join('public', 'screenshots', screenshot_filename)
     ScreenshotService.capture(url_link, screenshot_path)
-    update_column(:screenshot, "/screenshots/#{id}.png")
+    update_column(:screenshot, "/screenshots/#{screenshot_filename}")
   end
 end

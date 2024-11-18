@@ -174,7 +174,7 @@ p {
   }
 
   .new-btn {
-    width: 16px;
+    width: 60px;
   }
 }
 
@@ -307,6 +307,7 @@ a.btn {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   margin-left: 30px;
+  border-width: 0px;
 
   &:hover {
     background-color: #038071;
@@ -337,4 +338,8 @@ a.btn {
 
 em {
   height: 200px;
+}
+
+p {
+  text-align: center;
 }
