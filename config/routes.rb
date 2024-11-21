@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   delete '/auth/google_oauth2/logout', to: 'users/omniauth_callbacks#google_logout', as: :google_logout
 
-  resources :bookmarks
+  resources :bookmarks, except: %i[new]
 
   root 'bookmarks#index'
 end
