@@ -3,6 +3,7 @@
 # Management Bookmark objects
 class Bookmark < ApplicationRecord
   belongs_to :user
+  has_one :label
   after_create :generate_screenshot
   after_update :generate_screenshot, if: :saved_change_to_url_link?
 
