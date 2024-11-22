@@ -1,0 +1,29 @@
+
+
+<h1 class="title"><%= @label.name %></h1>
+
+<div class="form">
+  <% if @bookmarks.any? %>
+    <div class="bookmarks-group">
+      <% @bookmarks.each do |bookmark| %>
+        <% if current_user.id == bookmark.user_id %>
+          <div class="bookmark">
+            <%= link_to bookmark.url_link do %>
+              <%= image_tag bookmark.screenshot , alt: "Screenshot of #{bookmark.title}", class: "bookmark-image" %>
+            <% end %>
+            <div class="link-text">
+              <p><%= bookmark.title %></p>
+              <% if bookmark.description.present? %>
+                <p class="bookmark-description"><%= bookmark.description %></p>
+                <% else %>
+                <br>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <h1>There are not bookmarks with current label, <%= link_to "Back to hub", root_path %> 
+      <% end %>
+</div>

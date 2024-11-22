@@ -1,7 +1,19 @@
 <div class="left-side">
   <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn' %>
   <button class="dark-mode-btn" id="toggle-dark-mode">Change theme</button>
-  <button class="new-btn" data-bs-toggle="modal" data-bs-target="#newBookmarkModal">+</button>
+  <button class="new-btn" data-bs-toggle="modal" data-bs-target="#newBookmarkModal">+</button><br>
+  <button class="new-btn new-label" data-bs-toggle="modal" data-bs-target="#newLabelModal">Add Label</button>
+
+  <h2 class="label-name">All Labels</h2>
+<div>
+  <% @labels.each do |label| %>
+    <div class="label-item">
+      <p class="label-name"><%= link_to label.name, label_path(label) %></p>
+        <%= link_to 'Edit', "#", class: "label-btn", data: { bs_toggle: "modal", bs_target: "#editLabelModal#{label.id}" } %>
+        <%= button_to 'Delete', label_path(label), method: :delete, class: 'btn-delete btn-label' %>
+    </div>
+  <% end %>
+</div>
 </div>
 
 <h1 class="title">All Bookmarks</h1>
@@ -58,6 +70,11 @@
             <%= form.label :url_link, 'Url' %>
             <%= form.text_field :url_link, class: 'form-input' %>
           </div>
+
+          <div class="form-group">
+            <%= form.label :label_id, "Select Label" %>
+            <%= form.select :label_id, options_from_collection_for_select(@labels, :id, :name, @bookmark.label_id.to_i), {}, { class: "form-input" } %>
+          </div>
           
           <div class="form-group">
             <%= form.submit 'Create', class: 'btn-form' %>
@@ -89,6 +106,11 @@
             </div>
 
             <div class="form-group">
+              <%= form.label :label_id, "Select Label" %>
+              <%= form.select :label_id, options_from_collection_for_select(@labels, :id, :name, bookmark.label_id.to_i), {}, { class: "form-input" } %>
+            </div>
+
+            <div class="form-group">
               <%= form.label :url_link, 'Url' %>
               <%= form.text_field :url_link, class: 'form-input' %>
             </div>
@@ -102,3 +124,56 @@
     </div>
   </div>
 <% end %>
+
+
+<%# Label modals %>
+
+<div class="modal fade" id="newLabelModal" tabindex="-1" aria-labelledby="newLabelModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newLabelModalLabel">New Label</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with model: @label, url: labels_path, local: true do |form| %>
+          <div class="form-group">
+            <%= form.label :name, 'Label Name' %>
+            <%= form.text_field :name, class: 'form-input' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.submit 'Create Label', class: 'btn-form' %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<% @labels.each do |label| %>
+  <div class="modal fade" id="editLabelModal<%= label.id %>" tabindex="-1" aria-labelledby="editLabelModalLabel<%= label.id %>" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editLabelModalLabel<%= label.id %>">Edit Label</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= form_with model: label, url: label_path(label), method: :patch, local: true do |form| %>
+            <div class="form-group">
+              <%= form.label :name, 'Label Name' %>
+              <%= form.text_field :name, class: 'form-input' %>
+            </div>
+
+            <div class="form-group">
+              <%= form.submit 'Save Changes', class: 'btn-form' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

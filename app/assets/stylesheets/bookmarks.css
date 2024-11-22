@@ -23,6 +23,14 @@ body.dark-mode .bookmark {
   background-color: #59d0ff44;
 }
 
+.label-item {
+  display: flex;
+}
+
+.label-name {
+  margin: 0 10px;
+}
+
 .title {
   position: relative;
   top: 0;
@@ -218,6 +226,11 @@ p {
     transform: scale(1.1);
     transition: transform 0.4s ease;
   }
+}
+
+.btn-label {
+  font-size: 10px;
+  margin-top: -20px;
 }
 
 .form-group {

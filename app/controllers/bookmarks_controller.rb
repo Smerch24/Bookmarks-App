@@ -8,6 +8,8 @@ class BookmarksController < ApplicationController
   def index
     @bookmarks = Bookmark.where(user_id: current_user.id)
     @bookmark = Bookmark.new
+    @labels = Label.all
+    @label = Label.new
   end
 
   def create
@@ -21,10 +23,13 @@ class BookmarksController < ApplicationController
   end
 
   def update
+    @bookmark = Bookmark.find(params[:id])
     if @bookmark.update(bookmark_params)
-      redirect_to bookmarks_path
+      Rails.logger.info "Update successful: #{@bookmark.attributes}"
+      redirect_to bookmarks_path, notice: 'Bookmark updated successfully.'
     else
-      render :edit
+      Rails.logger.info "Update failed: #{@bookmark.errors.full_messages}"
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -36,7 +41,7 @@ class BookmarksController < ApplicationController
   private
 
   def bookmark_params
-    params.require(:bookmark).permit(:title, :url_link, :description, :user_id, :screenshot)
+    params.require(:bookmark).permit(:title, :url_link, :description, :user_id, :screenshot, :label_id)
   end
 
   def find_bookmark_by_id
