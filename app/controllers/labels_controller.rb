@@ -11,7 +11,6 @@ class LabelsController < ApplicationController
 
   def create
     @label = Label.new(label_params)
-
     if @label.save
       redirect_to bookmarks_path
     else
@@ -39,6 +38,6 @@ class LabelsController < ApplicationController
    private
 
   def label_params
-    params.require(:label).permit(:name)
+    params.require(:label).permit(:name, :user_id)
   end
 end
