@@ -18,5 +18,5 @@
 * [puppeteer-ruby](https://github.com/YusukeIwaki/puppeteer-ruby)
 #
 **To Do**
-* Modular windows for edit and new paths
-* A functional for sidebar
+* - [x]  Modular windows for edit and new paths
+* - [x] A functional for sidebar
