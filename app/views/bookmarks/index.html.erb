@@ -73,7 +73,7 @@
 
           <div class="form-group">
             <%= form.label :label_id, "Select Label" %>
-            <%= form.select :label_id, options_from_collection_for_select(@labels, :id, :name, @bookmark.label_id.to_i), {}, { class: "form-input" } %>
+            <%= form.select :label_id, options_from_collection_for_select(@labels, :id, :name, @bookmark&.label_id.to_i), {}, { class: "form-input" } %>
           </div>
           
           <div class="form-group">
@@ -143,10 +143,13 @@
           </div>
 
           <div class="form-group">
+            <%= form.hidden_field :user_id, value: current_user.id %>
+          </div>
+
+          <div class="form-group">
             <%= form.submit 'Create Label', class: 'btn-form' %>
           </div>
         <% end %>
-
       </div>
     </div>
   </div>
