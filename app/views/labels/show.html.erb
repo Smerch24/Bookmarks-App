@@ -1,6 +1,21 @@
+<div class="left-side">
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn logout-btn' %>
+  <%= link_to "Back", root_path, class: "btn" %>
+  <button class="btn" id="toggle-dark-mode">Change theme</button>
 
+  <h2 class="label-title">All Labels</h2>
 
-<h1 class="title"><%= @label.name %></h1>
+  <div class="labels">
+    <% @labels.each do |label| %>
+      <div class="label-btn">
+        <%= link_to label.name, label_path(label), class: "label-item" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<h1 class="title"><%= @label.name %><%= button_to "Delete", label_path(@labels), method: :delete, class: 'btn-delete' %></h1>
+
 
 <div class="form">
   <% if @bookmarks.any? %>
@@ -15,7 +30,7 @@
               <p><%= bookmark.title %></p>
               <% if bookmark.description.present? %>
                 <p class="bookmark-description"><%= bookmark.description %></p>
-                <% else %>
+              <% else %>
                 <br>
               <% end %>
             </div>
@@ -24,6 +39,6 @@
       <% end %>
     </div>
   <% else %>
-    <h1>There are not bookmarks with current label, <%= link_to "Back to hub", root_path %> 
-      <% end %>
+    <h1 class="no-bookmark-massage">There are no bookmarks with the current label, <%= link_to "Back to hub", root_path %></h1>
+  <% end %>
 </div>

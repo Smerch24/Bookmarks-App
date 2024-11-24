@@ -8,7 +8,7 @@ class BookmarksController < ApplicationController
   def index
     @bookmarks = Bookmark.where(user_id: current_user.id)
     @bookmark = Bookmark.new
-    @labels = Label.where(user_id: current_user.id)
+    @labels = Label.where(user_id: current_user.id).sort_by { |label| -label.name.length }
     @label = Label.new
   end
 
