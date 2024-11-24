@@ -5,7 +5,7 @@ class LabelsController < ApplicationController
   layout 'bookmarks'
 
   def show
-    @labels = Label.where(user_id: current_user.id)
+    @labels = Label.where(user_id: current_user.id).sort_by { |label| -label.name.length }
     @label = Label.find(params[:id])
     @bookmarks = Bookmark.where(label_id: @label.id, user_id: current_user.id)
   end
