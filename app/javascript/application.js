@@ -2,7 +2,7 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("turbo:load", function () {
   const toggleDarkModeButton = document.getElementById("toggle-dark-mode");
 
   if (toggleDarkModeButton) {
