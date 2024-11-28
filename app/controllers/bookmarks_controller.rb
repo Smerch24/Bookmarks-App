@@ -5,10 +5,11 @@ class BookmarksController < ApplicationController
   layout 'bookmarks'
   before_action :find_bookmark_by_id, only: %i[update destroy]
   before_action :authenticate_user!
+
   def index
-    @bookmarks = Bookmark.where(user_id: current_user.id)
+    @bookmarks = Bookmark.by_user(current_user.id)
     @bookmark = Bookmark.new
-    @labels = Label.where(user_id: current_user.id).sort_by { |label| -label.name.length }
+    @labels = Label.by_user(current_user.id).order_by_name
     @label = Label.new
   end
 
@@ -23,13 +24,10 @@ class BookmarksController < ApplicationController
   end
 
   def update
-    @bookmark = Bookmark.find(params[:id])
     if @bookmark.update(bookmark_params)
-      Rails.logger.info "Update successful: #{@bookmark.attributes}"
-      redirect_to bookmarks_path, notice: 'Bookmark updated successfully.'
+      redirect_to bookmarks_path
     else
-      Rails.logger.info "Update failed: #{@bookmark.errors.full_messages}"
-      render :edit, status: :unprocessable_entity
+      render 'bookmarks/index'
     end
   end
 
