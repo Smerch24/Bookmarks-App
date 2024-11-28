@@ -6,8 +6,8 @@ class LabelsController < ApplicationController
   before_action :find_label_id, only: %i[show update destroy]
 
   def show
-    @labels = Label.current_user.order_by_name
-    @bookmarks = Bookmark.current_user.current_label
+    @labels = Label.by_user(current_user.id).order_by_name
+    @bookmarks = Bookmark.by_user(current_user.id).by_label(@label.id)
   end
 
   def create
@@ -15,8 +15,8 @@ class LabelsController < ApplicationController
     if @label.save
       redirect_to bookmarks_path
     else
-      @bookmarks = Bookmark.where(user: current_user)
-      @labels = Label.all
+      @bookmarks = Bookmark.by_user(current_user.id)
+      @labels = Label.by_user(current_user.id)
       render 'bookmarks/index'
     end
   end

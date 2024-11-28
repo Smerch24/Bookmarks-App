@@ -7,15 +7,15 @@ class BookmarksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @bookmarks = Bookmark.current_user
+    @bookmarks = Bookmark.by_user(current_user.id)
     @bookmark = Bookmark.new
-    @labels = Label.current_user.order_by_name
+    @labels = Label.by_user(current_user.id).order_by_name
     @label = Label.new
   end
 
   def create
     @bookmark = Bookmark.new(bookmark_params)
-    @bookmark.current_user
+    @bookmark.user_id = current_user.id
     if @bookmark.save
       redirect_to bookmarks_path
     else
@@ -25,11 +25,9 @@ class BookmarksController < ApplicationController
 
   def update
     if @bookmark.update(bookmark_params)
-      Rails.logger.info "Update successful: #{@bookmark.attributes}"
-      redirect_to bookmarks_path, notice: 'Bookmark updated successfully.'
+      redirect_to bookmarks_path
     else
-      Rails.logger.info "Update failed: #{@bookmark.errors.full_messages}"
-      render :edit, status: :unprocessable_entity
+      render 'bookmarks/index'
     end
   end
 

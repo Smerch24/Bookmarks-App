@@ -11,9 +11,8 @@ class Bookmark < ApplicationRecord
   validates :url_link, presence: true
   validates :description, length: { maximum: 33 }
 
-  scope :current_user, -> { where(user_id: current_user.id) }
-  scope :current_label, -> { where(label_id: label.id) }
-  scope :order_by_name, -> { order('LENGTH(name) DESC') }
+  scope :by_user, ->(user_id) { where(user_id: user_id) }
+  scope :by_label, ->(label_id) { where(label_id: label_id) }
 
   private
 
