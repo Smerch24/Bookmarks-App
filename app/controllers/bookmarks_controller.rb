@@ -5,16 +5,17 @@ class BookmarksController < ApplicationController
   layout 'bookmarks'
   before_action :find_bookmark_by_id, only: %i[update destroy]
   before_action :authenticate_user!
+
   def index
-    @bookmarks = Bookmark.where(user_id: current_user.id)
+    @bookmarks = Bookmark.current_user
     @bookmark = Bookmark.new
-    @labels = Label.where(user_id: current_user.id).sort_by { |label| -label.name.length }
+    @labels = Label.current_user.order_by_name
     @label = Label.new
   end
 
   def create
     @bookmark = Bookmark.new(bookmark_params)
-    @bookmark.user_id = current_user.id
+    @bookmark.current_user
     if @bookmark.save
       redirect_to bookmarks_path
     else
@@ -23,7 +24,6 @@ class BookmarksController < ApplicationController
   end
 
   def update
-    @bookmark = Bookmark.find(params[:id])
     if @bookmark.update(bookmark_params)
       Rails.logger.info "Update successful: #{@bookmark.attributes}"
       redirect_to bookmarks_path, notice: 'Bookmark updated successfully.'

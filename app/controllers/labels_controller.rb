@@ -6,8 +6,8 @@ class LabelsController < ApplicationController
   before_action :find_label_id, only: %i[show update destroy]
 
   def show
-    @labels = Label.where(user_id: current_user.id).sort_by { |label| -label.name.length }
-    @bookmarks = Bookmark.where(label_id: @label.id, user_id: current_user.id)
+    @labels = Label.current_user.order_by_name
+    @bookmarks = Bookmark.current_user.current_label
   end
 
   def create
